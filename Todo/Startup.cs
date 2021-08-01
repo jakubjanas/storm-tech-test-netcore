@@ -8,6 +8,8 @@ using Todo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Todo.Interfaces;
+using Todo.Services;
 
 namespace Todo
 {
@@ -45,6 +47,8 @@ namespace Todo
                     .RequireAuthenticatedUser()
                     .Build();
             });
+
+            services.AddTransient<ITodoListService, TodoListService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

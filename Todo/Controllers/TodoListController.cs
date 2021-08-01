@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Todo.Data;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoLists;
+using Todo.Interfaces;
 using Todo.Models.TodoLists;
 using Todo.Services;
 
@@ -16,17 +17,19 @@ namespace Todo.Controllers
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IUserStore<IdentityUser> userStore;
+        private readonly ITodoListService todoListService;
 
-        public TodoListController(ApplicationDbContext dbContext, IUserStore<IdentityUser> userStore)
+        public TodoListController(ApplicationDbContext dbContext, IUserStore<IdentityUser> userStore, ITodoListService todoListService)
         {
             this.dbContext = dbContext;
             this.userStore = userStore;
+            this.todoListService = todoListService;
         }
 
         public IActionResult Index()
         {
             var userId = User.Id();
-            var todoLists = dbContext.RelevantTodoLists(userId);
+            var todoLists = todoListService.GetRelevantTodoLists(userId);
             var viewmodel = TodoListIndexViewmodelFactory.Create(todoLists);
             return View(viewmodel);
         }
@@ -57,7 +60,7 @@ namespace Todo.Controllers
             await dbContext.AddAsync(todoList);
             await dbContext.SaveChangesAsync();
 
-            return RedirectToAction("Create", "TodoItem", new {todoList.TodoListId});
+            return RedirectToAction("Create", "TodoItem", new { todoList.TodoListId });
         }
     }
 }
