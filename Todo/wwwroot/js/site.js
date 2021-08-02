@@ -11,3 +11,14 @@ document.getElementById("hideDoneItemsBtn")
             doneItems[0].style.display = displayStyle;
         }
     });
+
+const addNewItem = (todoListId) => {
+    $.ajax({
+        url: '/TodoItem/Create',
+        method: 'get',
+        data: { todoListId },
+        success: (result) => {
+            document.getElementById("add-new-item").innerHTML = result;
+        }
+    });
+}

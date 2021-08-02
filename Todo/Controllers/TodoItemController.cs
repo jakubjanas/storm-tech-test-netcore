@@ -24,7 +24,8 @@ namespace Todo.Controllers
         {
             var todoList = dbContext.SingleTodoList(todoListId);
             var fields = TodoItemCreateFieldsFactory.Create(todoList, User.Id());
-            return View(fields);
+
+            return PartialView("_CreatePartial", fields);
         }
 
         [HttpPost]
@@ -67,7 +68,7 @@ namespace Todo.Controllers
 
         private RedirectToActionResult RedirectToListDetail(int fieldsTodoListId)
         {
-            return RedirectToAction("Detail", "TodoList", new {todoListId = fieldsTodoListId});
+            return RedirectToAction("Detail", "TodoList", new { todoListId = fieldsTodoListId });
         }
     }
 }

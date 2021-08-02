@@ -16,7 +16,7 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col-md-8">
-                    <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
+                    <a href="#" onclick="addNewItem(@Model.TodoListId)">
                         <strong>Add New Item</strong>
                     </a>
                 </div>
@@ -38,6 +38,10 @@
                     </div>
                 </form>
             </div>
+        </li>
+
+        <li class="list-group-item">
+            <div id="add-new-item" />
         </li>
 
         @foreach (var item in Model.Items)
