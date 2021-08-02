@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Todo.Common;
 using Todo.Data;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoLists;
@@ -34,10 +35,10 @@ namespace Todo.Controllers
             return View(viewmodel);
         }
 
-        public IActionResult Detail(int todoListId)
+        public IActionResult Detail(int todoListId, SortOrder sortOrder)
         {
             var todoList = dbContext.SingleTodoList(todoListId);
-            var viewmodel = TodoListDetailViewmodelFactory.Create(todoList);
+            var viewmodel = TodoListDetailViewmodelFactory.Create(todoList, sortOrder);
             return View(viewmodel);
         }
 
